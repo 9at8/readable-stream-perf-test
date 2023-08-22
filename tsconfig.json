@@ -1,0 +1,35 @@
+{
+	"compilerOptions": {
+		"lib": [
+			"dom",
+			"es2022"
+		],
+		"outDir": "./out",
+		"allowJs": true,
+		"declaration": true,
+		"declarationMap": true,
+		"esModuleInterop": true,
+		"module": "commonjs",
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"target": "es2022",
+		"incremental": true,
+		// Code hygene
+		"strict": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
+	},
+	"include": [
+		"**/*"
+	],
+	"exclude": [
+		"node_modules",
+		"out"
+	],
+}

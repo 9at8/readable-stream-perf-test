@@ -1,0 +1,63 @@
+root: true
+
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+  project: ["./tsconfig.json"]
+
+extends:
+  - plugin:prettier/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - plugin:@typescript-eslint/strict
+
+plugins:
+  - "@typescript-eslint"
+  - prettier
+
+rules:
+  "@typescript-eslint/naming-convention": warn
+
+  # This is already enforced by TypeScript in tsconfig
+  "@typescript-eslint/no-unused-vars": off
+
+  "@typescript-eslint/semi": off
+  semi: off
+
+  curly: warn
+  object-curly-spacing: off
+
+  eqeqeq:
+    - warn
+    - smart
+
+  no-throw-literal: error
+
+  no-unexpected-multiline: error
+
+  # There are differences when `type` workes perfectly fine but `interface` errors out
+  # For example: When we pass in a ProxyMap to the server or client in webview-proxies
+  "@typescript-eslint/consistent-type-definitions": off
+
+  "@typescript-eslint/no-floating-promises": warn
+  "@typescript-eslint/no-misused-promises": warn
+
+  "@typescript-eslint/no-invalid-void-type":
+    - warn
+    - allowInGenericTypeArguments: true
+      allowAsThisParameter: true
+
+  "@typescript-eslint/unbound-method": off
+
+  prefer-object-spread: error
+
+  prettier/prettier:
+    - error
+    - printWidth: 80
+      semi: true
+      singleQuote: true
+      trailingComma: all
+      useTabs: true
+      endOfLine: auto
+      arrowParens: avoid

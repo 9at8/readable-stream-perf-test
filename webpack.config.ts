@@ -7,9 +7,13 @@ import * as path from 'path';
 const base: Configuration = {
 	target: ['web', 'es2022'],
 
+	entry: {
+		main: './src/index.ts',
+		iframe: './src/iframe/index.ts',
+	},
+
 	output: {
 		filename: '[name].js',
-		path: path.resolve(__dirname, 'out'),
 	},
 
 	module: {
@@ -38,11 +42,12 @@ const original: Configuration = {
 
 	name: 'original',
 
-	entry: {
-		original: './src/index.ts',
+	output: {
+		...base.output,
+		path: path.resolve(__dirname, 'out', 'original'),
 	},
 
-	plugins: [new HtmlWebpackPlugin({ filename: 'original.html' })],
+	plugins: [new HtmlWebpackPlugin({ chunks: ['main'], title: 'Original' })],
 };
 
 const modified: Configuration = {
@@ -50,13 +55,16 @@ const modified: Configuration = {
 
 	name: 'modified',
 
-	entry: {
-		modified: './src/index.ts',
+	output: {
+		...base.output,
+		path: path.resolve(__dirname, 'out', 'modified'),
 	},
 
-	plugins: [new HtmlWebpackPlugin({ filename: 'modified.html' })],
+	plugins: [new HtmlWebpackPlugin({ chunks: ['main'], title: 'Modified' })],
 
 	resolve: {
+		...base.resolve,
+
 		alias: {
 			process: '@9at8/process',
 		},

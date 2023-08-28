@@ -1,35 +1,16 @@
 {
 	"compilerOptions": {
-		"lib": [
-			"dom",
-			"es2022"
-		],
-		"outDir": "./out",
-		"allowJs": true,
-		"declaration": true,
-		"declarationMap": true,
-		"esModuleInterop": true,
 		"module": "commonjs",
-		"removeComments": true,
-		"resolveJsonModule": true,
+		"target": "ES2020",
+		"lib": [
+			"ES2020"
+		],
 		"sourceMap": true,
-		"target": "es2022",
-		"incremental": true,
-		// Code hygene
-		"strict": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitOverride": true,
-		"noImplicitReturns": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"noUncheckedIndexedAccess": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true
-	},
-	"include": [
-		"**/*"
-	],
-	"exclude": [
-		"node_modules",
-		"out"
-	],
+		"rootDir": "src",
+		"strict": true   /* enable all strict type-checking options */
+		/* Additional Checks */
+		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
+		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
+		// "noUnusedParameters": true,  /* Report errors on unused parameters. */
+	}
 }

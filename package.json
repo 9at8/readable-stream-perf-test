@@ -1,36 +1,57 @@
 {
   "name": "readable-stream-perf-test",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/9at8/readable-stream-perf-test.git",
-  "author": "Adi Thakral <github@9at8.dev>",
-  "license": "MIT",
-  "dependencies": {
-    "@9at8/process": "https://github.com/9at8/node-process.git#372586dfab559de9787019b16c3be296a279939f",
-    "readable-stream": "^4.4.2"
+  "displayName": "readable-stream-perf-test",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.81.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "readable-stream-perf-test.helloWorld",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/readable-stream": "^4.0.1",
+    "@types/vscode": "^1.81.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/readable-stream": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-prettier": "^5.0.0",
-    "html-webpack-plugin": "^5.5.3",
+    "glob": "^10.3.3",
+    "mocha": "^10.2.0",
     "prettier": "^3.0.2",
-    "ts-loader": "^9.4.4",
-    "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
+    "ts-loader": "^9.4.4",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "@vscode/test-electron": "^2.3.4"
   },
-  "scripts": {
-    "build": "webpack --mode=production",
-    "lint": "eslint ./src --ext .ts",
-    "start:common": "webpack serve --mode=development --open",
-    "start:original": "yarn run start:common --env type=original",
-    "start:modified": "yarn run start:common --env type=modified"
+  "dependencies": {
+    "@9at8/process": "https://github.com/9at8/node-process.git#372586dfab559de9787019b16c3be296a279939f",
+    "readable-stream": "^4.4.2"
   }
 }

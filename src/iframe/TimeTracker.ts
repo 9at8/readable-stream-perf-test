@@ -1,5 +1,5 @@
 export interface TimeTracker {
-	addRecord(time: number): void;
+	track(task: () => Promise<void>): Promise<void>;
 	average: number;
 }
 
@@ -7,8 +7,13 @@ export function createTimeTracker(): TimeTracker {
 	const times: number[] = [];
 
 	return {
-		addRecord(time) {
-			times.push(time);
+		async track(task) {
+			const before = performance.now();
+
+			await task();
+
+			const after = performance.now();
+			times.push(after - before);
 		},
 
 		get average() {

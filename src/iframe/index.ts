@@ -1,24 +1,23 @@
-import { createPair } from './Pair';
+import { createDuplex } from '../common/Stream';
+import { createIFrameMessenger } from '../common/messenger';
 import { createRoundTripWithTimeTracker } from './RoundTrip';
 import { createTimeTracker } from './TimeTracker';
-import { wait } from './Wait';
 
 async function main() {
-	const pair = createPair(wait);
 	const tracker = createTimeTracker();
-	const roundTripOne = createRoundTripWithTimeTracker(tracker, pair);
-	const roundTripTwo = createRoundTripWithTimeTracker(tracker, {
-		one: pair.two,
-		two: pair.one,
-	});
+	const stream = createDuplex(
+		createIFrameMessenger('my-event-name', window.parent, window),
+	);
+
+	const roundTrip = createRoundTripWithTimeTracker(tracker, stream);
 
 	document.body.innerHTML = 'waiting ...';
 
-	await Promise.all(
-		new Array(1000)
-			.fill(undefined)
-			.map(() => (Math.random() > 0.5 ? roundTripOne() : roundTripTwo())),
-	);
+	for (let i = 0; i < 1000; i++) {
+		await roundTrip();
+	}
+
+	// await Promise.all(new Array(1000).fill(undefined).map(() => roundTrip()));
 
 	document.body.innerHTML = `average round trip time: ${tracker.average}ms`;
 	console.log(document.body.innerHTML);

@@ -1,45 +1,29 @@
-import { Pair } from './Pair';
+import { Duplex } from 'readable-stream';
 import { TimeTracker } from './TimeTracker';
+import { PromiseWithResolvers } from '../common/PromiseWithResolvers';
 
 export function createRoundTripWithTimeTracker(
 	tracker: TimeTracker,
-	pair: Pair,
+	stream: Duplex,
 ) {
 	return async function roundTrip() {
-		let roundTripSuccessful: () => void = () => {};
+		const roundTrip = PromiseWithResolvers<void>();
 
-		const roundTripPromise = new Promise<void>(resolve => {
-			roundTripSuccessful = resolve;
+		const toSend = crypto.getRandomValues(new Uint8Array(1000));
+
+		function onRead(received: Uint8Array) {
+			if (isEqual(received, toSend)) {
+				stream.off('data', onRead);
+				roundTrip.resolve();
+			}
+		}
+
+		stream.on('data', onRead);
+
+		await tracker.track(async () => {
+			stream.write(toSend);
+			await roundTrip.promise;
 		});
-
-		const data = crypto.getRandomValues(new Uint8Array(10240));
-
-		function onTwoRead(received: Uint8Array) {
-			if (isEqual(received, data)) {
-				pair.two.off('data', onTwoRead);
-				pair.two.write(received);
-			}
-		}
-
-		function onOneRead(received: Uint8Array) {
-			if (isEqual(received, data)) {
-				pair.one.off('data', onOneRead);
-				roundTripSuccessful();
-			}
-		}
-
-		pair.one.on('data', onOneRead);
-		pair.two.on('data', onTwoRead);
-
-		const before = performance.now();
-
-		pair.one.write(data);
-
-		await roundTripPromise;
-
-		const after = performance.now();
-
-		tracker.addRecord(after - before);
 	};
 }
 

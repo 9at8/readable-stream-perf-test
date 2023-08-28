@@ -10,6 +10,7 @@ const base: Configuration = {
 	entry: {
 		main: './src/index.ts',
 		iframe: './src/iframe/index.ts',
+		worker: './src/Worker.ts',
 	},
 
 	output: {

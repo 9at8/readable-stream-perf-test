@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "readable-stream-perf-test.helloWorld",
-        "title": "Hello World"
+        "command": "readable-stream-perf-test.webview",
+        "title": "Readable stream perf test"
       }
     ]
   },
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@types/vscode": "^1.81.0",
+    "@types/vscode-webview": "1.57.2",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
     "@types/readable-stream": "^4.0.2",
@@ -46,6 +47,7 @@
     "prettier": "^3.0.2",
     "typescript": "^5.1.6",
     "ts-loader": "^9.4.4",
+    "ts-node": "^10.9.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "@vscode/test-electron": "^2.3.4"
